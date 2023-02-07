@@ -1,6 +1,6 @@
-import axios from 'axios';
+const axios = require('axios');
 
-const baseURL= "";
+const baseURL= process.env.BASE_URL;
 const axiosInstance = axios.create({
     baseURL,
     headers: {
@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 });
 
 const onRequest = (request) => {
-    request.headers.Authorization = process.env.API_KEY;
+    request.headers.Authorization = `Token token=${process.env.API_KEY}`;
     return request;
 }
 
@@ -29,4 +29,4 @@ const onResponseError = (error) => {
 axiosInstance.interceptors.request.use(onRequest, onRequestError);
 axiosInstance.interceptors.response.use(onResponse, onResponseError);
 
-export default axiosInstance;
+module.exports = axiosInstance;
